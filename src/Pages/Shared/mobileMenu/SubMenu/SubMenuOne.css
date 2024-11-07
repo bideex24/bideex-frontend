@@ -1,0 +1,23 @@
+#mobiles{
+    position: fixed;
+    top: 10px;
+    left:0;
+    /* right: 0; */
+    margin-top: 35px;
+    padding-top: 11px;
+    padding-bottom: 11px;
+    padding-left: 15px;
+    padding-right: 85px;
+    width: 320px;
+    font-weight: bold;
+    z-index: 2;
+}
+/* .nav2{
+    padding-top: 1rem;
+} */
+.nav-open{
+    left: 0;
+}
+.nav-closed{
+    left: -320px;
+}

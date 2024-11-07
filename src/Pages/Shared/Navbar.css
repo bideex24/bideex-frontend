@@ -1,0 +1,103 @@
+/* mobile menu css */
+#open, #close, .nav{
+    display: none;
+    font-size: 1.5rem;
+}
+#open, #close{
+    position: absolute;
+    top: 3px;
+    right: 2px;
+    padding: 4px;
+    color: white;
+}
+/* #close{
+    background-color: red;
+} */
+
+#categories{
+    position: absolute;
+    top: 0;
+    left:0;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    padding-left: 15px;
+    padding-right: 125px;
+    width: 100%;
+    font-weight: bold;
+    z-index: 1;
+}
+.nav{
+    width: 320px;
+    height: 385px;
+    position: absolute;
+    top: 10px;
+    left: 0;
+    margin-top: 35px;
+    z-index: 1;
+    overflow-x: hidden;
+    background-color: white;
+    transition: 0.5s;
+}
+.links{
+    font-size: 16px;
+    padding-bottom: 5px;
+    display: block;
+    transition: all 0.3 linear;
+    margin-left: 15px;
+    margin-top: 13px;
+    text-transform: uppercase;
+}
+.nav-open{
+    left: 0;
+}
+.nav-closed{
+    left: -320px;
+}
+
+/* mobile menu css end here */
+/* large device css start here */
+ul li > .dropdown1, .dropdown2, .dropdown3{
+    display: none;
+    position: absolute;
+}
+ul li:hover > .dropdown1{
+    display: block;
+    width: 1349px;
+    margin-left: -253px;
+    background-color: #f9ebea;
+    display: grid;
+    grid-template-columns: repeat(4 1fr);
+    z-index: 1;
+}
+ul li:hover > .dropdown2{
+    position: absolute;
+    display: block;
+    z-index: 10;
+}
+ul li:hover > .dropdown3{
+    position: absolute;
+    display: block;
+    z-index: 30;
+}
+.bg:hover{
+    background-color: #B2B1B1;
+}
+/* large device css end here */
+/* media querie */
+
+/* mobile device */
+@media screen and (max-width: 576px){
+    .small-display{
+        display: none;
+    }
+    #open, #close, .nav{
+        display: block;
+    }
+}
+
+/* large device */
+@media screen and (min-width: 3200px){
+    ul li:hover > .dropdown1{
+        width: 1344px;
+    }
+}
