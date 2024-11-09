@@ -8,14 +8,8 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar1 = () => {
-  const { user, logOut }: any = useContext(AuthContext);
-  const handleLogOut = () => {
-    logOut()
-      .then({})
-      .catch((err: any) => {
-        console.log(err);
-      });
-  };
+  const { user }: any = useContext(AuthContext);
+
   return (
     <div className="bg-primary">
       <div className="max-w-6xl mx-auto text-white flex justify-between align-center py-2">
@@ -64,9 +58,9 @@ const Navbar1 = () => {
                         <a className="text-black">{user.displayName}</a>
                       </li>
                       <li>
-                        <a onClick={handleLogOut} className="text-black">
-                          Logout
-                        </a>
+                        <Link to="/dashboard/user" className="text-black">
+                          Dashboard
+                        </Link>
                       </li>
                     </ul>
                   </div>

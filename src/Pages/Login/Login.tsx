@@ -11,7 +11,7 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/dashboard/user";
   const {
     register,
     handleSubmit,
@@ -24,7 +24,9 @@ const Login = () => {
       .then((result: any) => {
         const user = result.user;
         console.log(user);
-        toast.success("User login Successfull!");
+        toast.success("User login Successfull!", {
+          position: "bottom-center",
+        });
         navigate(from, { replace: true });
       })
       .catch((err: any) => {

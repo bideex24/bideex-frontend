@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Helmet } from "react-helmet-async";
 import { useForm } from "react-hook-form";
@@ -10,8 +11,8 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
-  const { createUser }: any = useContext(AuthContext);
+  const from = location.state?.from?.pathname || "/dashboard/user";
+  const { createUser, updateUserProfile }: any = useContext(AuthContext);
   const {
     register,
     handleSubmit,
@@ -22,8 +23,13 @@ const Signup = () => {
   const onSubmit = (data: any) => {
     createUser(data.email, data.password).then((result: any) => {
       const loggedUser = result.user;
+      updateUserProfile(data.firstName, data.lastName).then(() => {
+        // create user entry in the database
+      });
       console.log(loggedUser);
-      toast.success("Successfully user signUp!");
+      toast.success("Successfully user signUp!", {
+        position: "bottom-center",
+      });
       navigate(from, { replace: true });
       reset();
     });
