@@ -57,6 +57,7 @@ const Dashboard = () => {
                 {user?.displayName}
               </h1>
               <h1 className="text-black">{user?.email}</h1>
+              <div className="border border-gray-200 w-64 -ml-12"></div>
             </div>
             <li>
               <NavLink className="flex gap-3 items-center" to="/dashboard/user">
@@ -144,7 +145,7 @@ const Dashboard = () => {
           </button>
         </div>
         {/* dashboard content */}
-        <div className="flex-1 px-8 py-8">
+        <div className="flex-1 px-6 py-6">
           <Outlet></Outlet>
         </div>
       </div>
