@@ -15,6 +15,7 @@ import PostAnAd from "../../Pages/Dashboard/PostAnAd/PostAnAd";
 import FavouriteAds from "../../Pages/Dashboard/FavouriteAds/FavouriteAds";
 import MyAds from "../../Pages/Dashboard/MyAds/MyAds";
 import UserDashboard from "../../Pages/Dashboard/UserDashboard/UserDashboard";
+import VerifiEmail from "../../Pages/Login/VerifiEmail";
 
 const router = createBrowserRouter([
   {
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
         element: <Signup></Signup>,
       },
       {
+        path: "/verifiemail",
+        element: <VerifiEmail></VerifiEmail>,
+      },
+      {
         path: "/target",
         element: <SubMenuOne></SubMenuOne>,
       },
@@ -43,6 +48,7 @@ const router = createBrowserRouter([
       },
     ],
   },
+
   {
     path: "dashboard",
     element: <Dashboard></Dashboard>,

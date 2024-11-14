@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Helmet } from "react-helmet-async";
@@ -11,7 +12,8 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/dashboard/user";
+  // const from = location.state?.from?.pathname || "/dashboard/user";
+  const from = location.state?.from?.pathname || "/verifiemail";
   const { createUser, updateUserProfile }: any = useContext(AuthContext);
   const {
     register,
@@ -20,11 +22,34 @@ const Signup = () => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data: any) => {
+  const onSubmit = async (data: any) => {
+    let verificationCode: any = Math.floor(
+      100000 + Math.random() * 900000
+    ).toString();
+    const formData = {
+      verificationCode: verificationCode,
+      name: {
+        firstName: data.firstName,
+        lastName: data.lastName,
+      },
+      email: data.email,
+      password: data.password,
+    };
     createUser(data.email, data.password).then((result: any) => {
       const loggedUser = result.user;
-      updateUserProfile(data.firstName, data.lastName).then(() => {
+      updateUserProfile(data.firstName, data.lastName).then(async () => {
         // create user entry in the database
+        try {
+          await fetch("https://backend-r8m2w.bideex.com/api/user/create-user", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify(formData), // Send data as JSON
+          });
+        } catch (err) {
+          console.log(err);
+        }
       });
       console.log(loggedUser);
       toast.success("Successfully user signUp!", {

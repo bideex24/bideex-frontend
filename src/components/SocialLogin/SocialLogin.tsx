@@ -4,10 +4,13 @@ import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogin = () => {
-  const { googleSignIn }: any = useAuth();
+  const { googleSignIn, loading }: any = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
+  if (loading) {
+    return <span className="loading loading-ring loading-lg"></span>;
+  }
   const handleGoogleSignIn = () => {
     googleSignIn()
       .then((result: any) => {

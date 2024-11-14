@@ -34,11 +34,13 @@ const Dashboard = () => {
   };
   return (
     <>
-      <Navbar1></Navbar1>
+      <div>
+        <Navbar1></Navbar1>
+      </div>
       <div className="flex">
         {/* dashboard sidebar */}
-        <div className="w-64 min-h-screen bg-white shadow-2xl">
-          <ul className="text-black w-40 mx-auto mt-6 text-xl">
+        <div className="w-96 min-h-screen bg-white shadow-2xl">
+          <ul className="text-black w-56 mx-auto mt-6 text-sm">
             <div className="mb-4">
               <div className="flex justify-center">
                 {user?.photoURL ? (
@@ -53,10 +55,8 @@ const Dashboard = () => {
                   </>
                 )}
               </div>
-              <h1 className="text-center text-black font-bold">
-                {user?.displayName}
-              </h1>
-              <h1 className="text-black">{user?.email}</h1>
+              <h1 className="text-center text-black ">{user?.displayName}</h1>
+              <h1 className="text-black text-base -ml-9">{user?.email}</h1>
               <div className="border border-gray-200 w-64 -ml-12"></div>
             </div>
             <li>
