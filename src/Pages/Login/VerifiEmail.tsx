@@ -5,15 +5,14 @@ import "./VerifiEmail.css";
 import { useState } from "react";
 import OTPInput from "otp-input-react";
 import logo from "../../../public/login-logo.svg";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const VerifiEmail = () => {
   const [OTP, setOTP] = useState("");
-  const {
-    handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm();
+  const { handleSubmit, reset } = useForm();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/dashboard/user";
   const onSubmit = async () => {
     const verificationCode = OTP;
     const verifiCode = {
@@ -22,16 +21,20 @@ const VerifiEmail = () => {
     console.log(verifiCode);
     // create user entry in the database
     try {
-      await fetch("http://localhost:5000/api/user/user-verify", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(verifiCode), // Send data as JSON
-      });
+      await fetch(
+        "https://bideex-backend-node.vercel.app/api/user/email-verify",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(verifiCode), // Send data as JSON
+        }
+      );
+      navigate(from, { replace: true });
       reset();
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      console.log(error);
     }
   };
 

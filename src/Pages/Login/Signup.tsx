@@ -12,7 +12,6 @@ import SocialLogin from "../../components/SocialLogin/SocialLogin";
 const Signup = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  // const from = location.state?.from?.pathname || "/dashboard/user";
   const from = location.state?.from?.pathname || "/verifiemail";
   const { createUser, updateUserProfile }: any = useContext(AuthContext);
   const {
@@ -37,20 +36,27 @@ const Signup = () => {
     };
     createUser(data.email, data.password).then((result: any) => {
       const loggedUser = result.user;
-      updateUserProfile(data.firstName, data.lastName).then(async () => {
-        // create user entry in the database
-        try {
-          await fetch("https://backend-r8m2w.bideex.com/api/user/create-user", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify(formData), // Send data as JSON
-          });
-        } catch (err) {
-          console.log(err);
+      updateUserProfile(data.firstName, data.lastName).then(
+        async (result: any) => {
+          const loggedUser = result;
+          console.log(loggedUser);
+          // create user entry in the database
+          try {
+            await fetch(
+              "https://bideex-backend-node.vercel.app/api/user/create-user",
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData), // Send data as JSON
+              }
+            );
+          } catch (err) {
+            console.log(err);
+          }
         }
-      });
+      );
       console.log(loggedUser);
       toast.success("Successfully user signUp!", {
         position: "bottom-center",
