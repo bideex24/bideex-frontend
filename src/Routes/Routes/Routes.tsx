@@ -70,7 +70,7 @@ const router = createBrowserRouter([
         element: <FavouriteAds></FavouriteAds>,
       },
       {
-        path: "Post-an-ad",
+        path: "post-an-ad",
         element: <PostAnAd></PostAnAd>,
       },
       {

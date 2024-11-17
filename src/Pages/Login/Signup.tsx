@@ -30,17 +30,19 @@ const Signup = () => {
       name: {
         firstName: data.firstName,
         lastName: data.lastName,
+        userName: data.userName,
       },
       email: data.email,
       password: data.password,
     };
     createUser(data.email, data.password).then((result: any) => {
       const loggedUser = result.user;
-      updateUserProfile(data.firstName, data.lastName).then(
+      updateUserProfile(data.firstName, data.lastName, data.userName).then(
         async (result: any) => {
           const loggedUser = result;
           console.log(loggedUser);
           // create user entry in the database
+          // https://bideex-backend-node.vercel.app
           try {
             await fetch(
               "https://bideex-backend-node.vercel.app/api/user/create-user",
@@ -105,43 +107,76 @@ const Signup = () => {
           <legend className="text-2xl font-bold text-center text-white mb-5">
             Sign Up
           </legend>
-          <p className="text-white mt-3 mb-5 lg:text-md ">
+          <p className="text-white mt-3 mb-5 lg:text-sm">
             <span>Already have an account?</span>{" "}
-            <Link className="text-secondary" to="/login">
+            <Link className="text-secondary text-sm" to="/login">
               Login
             </Link>
           </p>
           <div className="md:flex">
             <div>
               <input
-                className="w-full md:w-[165px] py-2 px-4 mb-3 rounded-md mr-3"
+                className="w-full md:w-[165px] py-2 px-4 mb-5 rounded-md mr-3 text-sm focus:outline-none hidden md:block"
                 type="text"
                 placeholder="First Name"
-                {...register("firstName", { required: true })}
+                {...register("firstName", {
+                  pattern: /^[A-Za-z]+$/i,
+                  required: true,
+                })}
+                required
               />
             </div>
             <div>
               <input
-                className="w-full md:w-[165px] py-2 px-4 mb-3 rounded-md"
+                className="w-full md:w-[165px] py-2 px-4 mb-5 rounded-md mr-3 text-sm focus:outline-none hidden md:block"
                 type="text"
                 placeholder="Last Name"
-                {...register("lastName", { required: true })}
+                {...register("lasttName", {
+                  pattern: /^[A-Za-z]+$/i,
+                  required: true,
+                })}
+                required
+              />
+            </div>
+            <div>
+              <input
+                className="w-full md:w-[165px] py-2 px-4 mb-5 rounded-md text-sm focus:outline-none block md:hidden"
+                type="text"
+                placeholder="Full Name"
+                {...register("fullName")}
               />
             </div>
           </div>
           <input
-            className="w-full py-2 px-4 mb-3 rounded-md"
+            className="w-full py-2 px-4 mb-5 rounded-md text-sm focus:outline-none"
             type="text"
-            placeholder="Email"
-            {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+            placeholder="User Name"
+            {...register("userName")}
+            required
           />
           <input
-            className="w-full py-2 px-4 mb-3 rounded-md"
+            className="w-full py-2 px-4 mb-5 rounded-md text-sm focus:outline-none"
+            type="email"
+            placeholder="Email"
+            {...register("email", {
+              required: "Email Address is required",
+              pattern: /^\S+@\S+$/i,
+            })}
+            required
+          />
+          {errors.email && typeof errors.email.message === "string" && (
+            <p className="text-secondary text-sm absolute -mt-5" role="alert">
+              Please enter a valid email address
+            </p>
+          )}
+          <input
+            className="w-full py-2 px-4 mb-3 rounded-md text-sm focus:outline-none"
             type="password"
             placeholder="Password"
             {...register("password", {
               required: true,
             })}
+            required
           />
           {/* {errors.password?.type == "maxLength" && (
             <span className="text-secondary">
@@ -149,20 +184,20 @@ const Signup = () => {
             </span>
           )} */}
           <div className="flex justify-between align-center">
-            <p className="text-white">
+            <p className="text-white text-sm">
               By clicking Sign Up, you agree to{" "}
-              <Link className="text-secondary" to="">
+              <Link className="text-secondary text-sm" to="">
                 our Terms, Privacy Policy and Cookies Policy.
               </Link>
             </p>
           </div>
-          <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-xl mt-3">
+          <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-sm mt-3">
             Sign Up
           </button>
-          <div className="divider divider-error text-white">
+          <div className="divider divider-error text-white text-sm">
             Or continue with
           </div>
-          <div className="flex justify-center">
+          <div className="flex justify-center -mt-5">
             <SocialLogin></SocialLogin>
           </div>
         </form>

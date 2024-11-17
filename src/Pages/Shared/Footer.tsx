@@ -9,7 +9,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-primary mt-56">
+    <footer className="bg-primary mt-36">
       <div className="max-w-6xl lg:mx-auto grid grid-cols-1 md:grid-cold-4 lg:grid-cols-4 bg-primary py-10 gap-8 mx-8">
         <nav className=" text-wrap md:text-balance lg:text-balance">
           <h6 className="text-white text-xl font-bold">About Bideex</h6>

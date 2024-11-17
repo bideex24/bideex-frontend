@@ -5,34 +5,34 @@ import { IoFlashOutline } from "react-icons/io5";
 import phone from "../../../../public/favicon.ico";
 const UserDashboard = () => {
   return (
-    <section className="max-w-6xl mx-auto">
+    <section className="max-w-3xl mx-auto">
       {/* top three cart section start here */}
       <section className="flex gap-6">
-        <div className="w-[305px] h-40 bg-white shadow-2xl rounded-xl flex justify-center items-center gap-4">
-          <div className="w-20 h-20 rounded-full  border border-green-500">
-            <FaRegCircleCheck className="text-5xl text-green-400 absolute mt-3.5 ml-3.5" />
+        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+          <div className="w-12 h-12 rounded-full  border border-primary">
+            <FaRegCircleCheck className="text-xl text-primary absolute mt-3 ml-3" />
           </div>
           <div>
-            <p className="text-2xl font-bold">30</p>
-            <h3 className="text-xl">Total Ad Posted</h3>
+            <p className="text-sm font-bold">30</p>
+            <h3 className="text-sm">Total Ad Posted</h3>
           </div>
         </div>
-        <div className="w-[305px] h-40 bg-white shadow-2xl rounded-xl flex justify-center items-center gap-4">
-          <div className="w-20 h-20 rounded-full  border border-purple-500">
-            <IoFlashOutline className="text-5xl text-purple-400 absolute mt-3.5 ml-3.5" />
+        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+          <div className="w-12 h-12 rounded-full  border border-purple-500">
+            <IoFlashOutline className="text-xl text-purple-400 absolute mt-3 ml-3" />
           </div>
           <div>
-            <p className="text-2xl font-bold">23</p>
-            <h3 className="text-xl">Featured Ads</h3>
+            <p className="text-sm font-bold">23</p>
+            <h3 className="textsm">Featured Ads</h3>
           </div>
         </div>
-        <div className="w-[305px] h-40 bg-white shadow-2xl rounded-xl flex justify-center items-center gap-4">
-          <div className="w-20 h-20 rounded-full  border border-pink-500">
-            <CiFaceFrown className="text-5xl text-pink-400 absolute mt-3.5 ml-3.5" />
+        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+          <div className="w-12 h-12 rounded-full  border border-pink-500">
+            <CiFaceFrown className="text-xl text-pink-400 absolute mt-3 ml-3" />
           </div>
           <div>
-            <p className="text-2xl font-bold">45</p>
-            <h3 className="text-xl">Expired Ads</h3>
+            <p className="text-sm font-bold">45</p>
+            <h3 className="textsm">Expired Ads</h3>
           </div>
         </div>
       </section>
@@ -40,100 +40,80 @@ const UserDashboard = () => {
       {/* bottom two cart section start here */}
       <section className="flex gap-6 mt-6">
         {/* left cart start here */}
-        <div className="w-[470px] min-h-screen bg-white shadow-2xl rounded-xl">
-          <h3 className="text-2xl font-bold py-6 px-6">My Activite Log</h3>
+        <div className="w-[470px] min-h-screen bg-white rounded-xl ">
+          <h3 className="text-sm font-bold py-6 px-6">My Activite Log</h3>
           <hr />
           <section className="px-6">
             <section className="flex items-center gap-3 py-4">
               <div>
-                <IoMdNotificationsOutline className="text-purple-400 text-4xl" />
+                <IoMdNotificationsOutline className="text-secondary text-2xl" />
               </div>
               <div>
-                <h4 className="text-xl font-bold">Your profile updated</h4>
+                <h4 className="text-sm font-bold">Your profile updated</h4>
                 <p>1 day ago</p>
               </div>
             </section>
             <section className="flex items-center gap-3 py-4">
               <div>
-                <IoMdNotificationsOutline className="text-purple-400 text-4xl" />
+                <IoMdNotificationsOutline className="text-secondary text-2xl" />
               </div>
               <div>
-                <h4 className="text-xl font-bold">You change your password</h4>
+                <h4 className="text-sm font-bold">Your profile updated</h4>
                 <p>1 day ago</p>
               </div>
             </section>
             <section className="flex items-center gap-3 py-4">
               <div>
-                <IoMdNotificationsOutline className="text-purple-400 text-4xl" />
+                <IoMdNotificationsOutline className="text-secondary text-2xl" />
               </div>
               <div>
-                <h4 className="text-xl font-bold">Your ads approved!</h4>
-                <p>1 day ago</p>
-              </div>
-            </section>
-            <section className="flex items-center gap-3 py-4">
-              <div>
-                <IoMdNotificationsOutline className="text-purple-400 text-4xl" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold">You submit a new ads</h4>
-                <p>1 day ago</p>
-              </div>
-            </section>
-            <section className="flex items-center gap-3 py-4">
-              <div>
-                <IoMdNotificationsOutline className="text-purple-400 text-4xl" />
-              </div>
-              <div>
-                <h4 className="text-xl font-bold">
-                  You subscribe as a pro user!
-                </h4>
+                <h4 className="text-sm font-bold">Your profile updated</h4>
                 <p>1 day ago</p>
               </div>
             </section>
           </section>
         </div>
         {/* right cart start here */}
-        <div className="w-[470px] min-h-screen bg-white shadow-2xl rounded-xl">
-          <h3 className="text-2xl font-bold py-6 px-6">Recent Ads</h3>
+        <div className="w-[470px] min-h-screen bg-white  rounded-xl">
+          <h3 className="text-sm font-bold py-6 px-6">Recent Ads</h3>
           <hr />
           <section className="px-6">
             <section className="flex items-center gap-3 py-4">
               <div>
                 <img
-                  className="w-16 h-16 bg-slate-300 rounded"
+                  className="w-10 h-10 bg-slate-300 rounded"
                   src={phone}
                   alt=""
                 />
               </div>
               <div>
-                <h4 className="text-xl font-bold">iPhone 11 Pro Max</h4>
+                <h4 className="text-sm font-bold">iPhone 11 Pro Max</h4>
                 <p>30 minutes ago</p>
               </div>
             </section>
             <section className="flex items-center gap-3 py-4">
               <div>
                 <img
-                  className="w-16 h-16 bg-slate-300 rounded"
+                  className="w-10 h-10 bg-slate-300 rounded"
                   src={phone}
                   alt=""
                 />
               </div>
               <div>
-                <h4 className="text-xl font-bold">iPhone 11 Pro Max</h4>
+                <h4 className="text-sm font-bold">iPhone 11 Pro Max</h4>
                 <p>30 minutes ago</p>
               </div>
             </section>
             <section className="flex items-center gap-3 py-4">
               <div>
                 <img
-                  className="w-16 h-16 bg-slate-300 rounded"
+                  className="w-10 h-10 bg-slate-300 rounded"
                   src={phone}
                   alt=""
                 />
               </div>
               <div>
-                <h4 className="text-xl font-bold">iPhone 11 Pro Max</h4>
+                <h4 className="text-sm font-bold">iPhone 11 Pro Max</h4>
                 <p>30 minutes ago</p>
               </div>
             </section>

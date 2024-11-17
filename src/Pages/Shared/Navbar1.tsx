@@ -8,8 +8,11 @@ import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 
 const Navbar1 = () => {
-  const { user }: any = useContext(AuthContext);
-
+  const { user, loading }: any = useContext(AuthContext);
+  console.log("user", user);
+  if (loading) {
+    return;
+  }
   return (
     <div className="bg-primary">
       <div className="max-w-6xl mx-auto text-white flex justify-between align-center py-2">
@@ -34,68 +37,54 @@ const Navbar1 = () => {
               )}
               {user ? (
                 <>
-                  <div className="dropdown dropdown-end">
-                    <div tabIndex={0} role="button" className="">
-                      <div className="w-10 rounded-full">
-                        {user.photoURL ? (
-                          <>
-                            <img className="" alt="user" src={user.photoURL} />
-                          </>
-                        ) : (
-                          <>
-                            <span className="text-3xl text-green-400">
-                              <FaRegUserCircle />
-                            </span>
-                          </>
-                        )}
-                      </div>
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow"
+                  <li className="mt-1">
+                    <Link
+                      to="/dashboard/user"
+                      className="text-white text-sm font-bold mr-4"
                     >
-                      <li>
-                        <a className="text-black">{user.displayName}</a>
-                      </li>
-                      <li>
-                        <Link to="/dashboard/user" className="text-black">
-                          Dashboard
-                        </Link>
-                      </li>
-                    </ul>
-                  </div>
+                      Dashboard
+                    </Link>
+                  </li>
+                  {user?.photoURL ? (
+                    <>
+                      <img
+                        className="w-10 rounded-full"
+                        alt="user"
+                        src={user.photoURL}
+                      />
+                    </>
+                  ) : (
+                    <>
+                      <span className="text-3xl text-white">
+                        <FaRegUserCircle />
+                      </span>
+                    </>
+                  )}
                 </>
               ) : (
                 <>
-                  <Link className="mt-1" to="/login">
+                  <Link className="mt-2 text-sm" to="/login">
                     Login
                   </Link>
+                  <span className="ml-2 mt-2 mr-2">|</span>
+                  <li className="underline pt-2 text-sm">
+                    <Link to="">How It works</Link>
+                    <span className="ml-2">|</span>
+                  </li>
+                  <li className="mx-2 pt-2 text-sm">
+                    <Link to="">Help</Link>
+                  </li>
+                  <img className="w-10 h-5 mt-2 mr-2" src={flag} alt="" />
+                  <li className="mt-2 mr-2 text-sm">
+                    <Link to="">Eng</Link>
+                  </li>
                 </>
               )}
-              <span className="ml-2 mt-1">|</span>
             </li>
-            <li className="underline pt-3">
-              <Link to="">How It works</Link>
-              <span className="ml-2">|</span>
-            </li>
-            <li className="mx-2 pt-3">
-              <Link to="">Help</Link>
-            </li>
-            <img className="w-10 h-5 mt-4 mr-2" src={flag} alt="" />
-            <li className="mt-3.5 mr-2">
-              <Link to="">Eng</Link>
-            </li>
-            {/* <select className="mr-5 text-white rounded bg-primary">
-                                <option  className="text-white" value="">CHINESE
-                                </option>
-                                <option value="option1 text-white">SPANISH</option>
-                                <option value="option2 text-white">ENGLISH</option>
-                                <option value="option2 text-white">BENGALI</option>
-                        </select> */}
             <div>
               <Link
                 to=""
-                className="btn text-white text-base hover:bg-secondary bg-secondary border-0"
+                className="btn text-white text-sm hover:bg-secondary bg-secondary border-0"
               >
                 Post an Add
               </Link>

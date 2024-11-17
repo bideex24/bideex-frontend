@@ -17,7 +17,6 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm();
-
   const { signIn }: any = useContext(AuthContext);
   const onSubmit = (data: any) => {
     signIn(data.email, data.password)
@@ -74,38 +73,52 @@ const Login = () => {
             Log in
           </legend>
           <input
-            className="w-full py-2 px-4 mb-5 rounded-md"
+            className="w-full py-2 px-4 rounded-md text-sm focus:outline-none"
             type="text"
             placeholder="Email"
-            {...register("email", { required: true, pattern: /^\S+@\S+$/i })}
+            {...register("email", {
+              required: "Email Address is required",
+              pattern: /^\S+@\S+$/i,
+            })}
+            required
           />
+          {errors.email && typeof errors.email.message === "string" && (
+            <p className="text-secondary text-sm absolute" role="alert">
+              Please enter a valid email address
+            </p>
+          )}
           <input
-            className="w-full py-2 px-4 mb-5 rounded-md"
+            className="w-full py-2 px-4 mt-5 rounded-md text-sm focus:outline-none"
             type="password"
             placeholder="Password"
             {...register("password")}
           />
-          <div className="flex justify-between align-center">
+          {/* {errors.email && typeof errors.email.message === "string" && (
+            <p className="text-secondary text-sm absolute" role="alert">
+              Please minimum 6 characters password
+            </p>
+          )} */}
+          <div className="flex justify-between align-center mt-5">
             <p>
               <input type="checkbox" name="" id="" />
-              <span className="text-white mx-3">Remember Me</span>
+              <span className="text-white mx-3 text-sm">Remember Me</span>
             </p>
-            <p className="text-white underline">
+            <p className="text-white underline text-sm">
               <Link to="">Forgot Password</Link>
             </p>
           </div>
           <div className="flex justify-center">
-            <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-xl mt-3">
+            <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-sm mt-3">
               Log in
             </button>
           </div>
-          <p className="text-start text-white mt-3 lg:text-md ">
+          <p className="text-start text-white mt-3 lg:text-md text-sm">
             <span>Create New Account?</span>{" "}
-            <Link className="text-secondary" to="/signup">
+            <Link className="text-secondary text-sm" to="/signup">
               Sign up{" "}
             </Link>
           </p>
-          <div className="divider divider-error text-white">
+          <div className="divider divider-error text-white text-sm">
             Or continue with
           </div>
           <div className="flex justify-center">

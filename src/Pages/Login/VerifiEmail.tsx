@@ -2,12 +2,14 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
 import "./VerifiEmail.css";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import OTPInput from "otp-input-react";
 import logo from "../../../public/login-logo.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { AuthContext } from "../../providers/AuthProvider";
 
 const VerifiEmail = () => {
+  const { user }: any = useContext(AuthContext);
   const [OTP, setOTP] = useState("");
   const { handleSubmit, reset } = useForm();
   const navigate = useNavigate();
@@ -39,13 +41,13 @@ const VerifiEmail = () => {
   };
 
   return (
-    <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 h-screen">
-      <div className="flex mt-10">
+    <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2">
+      <div className="flex items-center">
         <div>
           <div className="flex md:justify-start	 justify-center">
             <img className="md:w-full w-72 md:ml-0 ml-36" src={logo} alt="" />
           </div>
-          <h1 className="text-center md:text-left text-base md:text-base md:text-base font-bold my-3 md:my-0 mx-4 md:mx-0 text-black">
+          <h1 className="text-center md:text-start text-2xl md:text-2xl font-bold my-3 md:my-0 mx-4 md:mx-0 text-black">
             Enter Your OTP (One-Time Password)
           </h1>
           <p className="text-base my-3 md:my-0 mt-3 mx-4 md:mx-0 text-black">
@@ -55,7 +57,7 @@ const VerifiEmail = () => {
           </p>
         </div>
       </div>
-      <div className="bg-white mb-10 md:my-8">
+      <div className="bg-white mb-10 md:my-8 lg:my-10">
         <form
           className="w-full md:w-96 lg:w-96 h-full md:h-[520px]  bg-primary px-5 py-5 rounded-md"
           onSubmit={handleSubmit(onSubmit)}
@@ -64,7 +66,9 @@ const VerifiEmail = () => {
             Enter Your OTP
           </legend>
           <p className="text-white text-center mb-3">
-            Your verification code has been sent to your email address
+            A verification code has been sent to{" "}
+            <span className=" text-secondary"> {user?.email} </span> <br />
+            Please enter it below to complete verification.
           </p>
           <OTPInput
             value={OTP}
@@ -73,22 +77,33 @@ const VerifiEmail = () => {
             otpType="number"
             disabled={false}
             autoFocus
-            className="focus:outline-none border border-none flex justify-center"
+            inputStyles={{
+              backgroundColor: "#00294d", // Change background color
+              fontSize: "20px",
+              fontWeight: "bold",
+              borderRadius: "5px",
+              border: "2px solid white",
+              color: "white",
+              padding: "5px",
+              width: "40px", // Increase width
+              height: "40px",
+            }}
+            className="inputStyles-custom "
           />
           ;
-          <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-xl mt-3">
+          <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-sm mt-3">
             Verify Now
           </button>
           <div>
-            <p className="text-white text-center mt-6">
+            <p className="text-white text-center mt-6 text-sm">
               Don't recive the OTP code
             </p>
             <div className="flex justify-center mt-4 gap-3">
-              <Link className="text-secondary" to="">
+              <Link className="text-secondary text-sm" to="">
                 Resent OTP
               </Link>
-              <span className="text-white"> Or </span>
-              <Link className="text-secondary" to="">
+              <span className="text-white text-sm"> Or </span>
+              <Link className="text-secondary text-sm" to="/signup">
                 Change Email
               </Link>
             </div>
