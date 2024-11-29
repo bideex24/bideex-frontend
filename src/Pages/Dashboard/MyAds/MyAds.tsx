@@ -10,7 +10,7 @@ const MyAds = () => {
     setActiveIndex(index);
   };
   return (
-    <section className="bg-white rounded-xl max-w-3xl mx-auto">
+    <section className="bg-white rounded-xl max-w-4xl mx-auto">
       <div className="px-6 py-4">
         <h4 className="text-sm font-bold">My Ads</h4>
       </div>
@@ -170,39 +170,10 @@ const MyAds = () => {
                   </button>
                 </th>
               </tr>
-              {/* row 1 */}
-              <tr className="text-black">
-                <td>
-                  <div className="flex items-center gap-3">
-                    <div className="avatar">
-                      <div className="mask mask-squircle h-12 w-12">
-                        <img src={logo} alt="product" />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="text-sm">Bran new iphone 16 pro max</div>
-                      <div className="text-sm opacity-50">$12</div>
-                    </div>
-                  </div>
-                </td>
-                <td>Electronic</td>
-                <td>New</td>
-                <th className="flex gap-2">
-                  <button className="border border-gray-400 px-3 py-3 rounded-full">
-                    <MdOutlineModeEdit className="text-black" />
-                  </button>
-                  <button className="border border-gray-400 px-3 py-3 rounded-full">
-                    <IoEyeOutline className="text-black" />
-                  </button>
-                  <button className="border border-gray-400 px-3 py-3 rounded-full">
-                    <RiDeleteBinLine className="text-black" />
-                  </button>
-                </th>
-              </tr>
             </tbody>
           </table>
         </div>
-        <div className="join mt-5 ml-5">
+        <div className="join  ml-5">
           {[1, 2, 3, 4].map((_, index) => (
             <input
               key={index}

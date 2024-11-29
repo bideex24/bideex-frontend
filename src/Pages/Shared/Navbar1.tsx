@@ -6,15 +6,21 @@ import { Link } from "react-router-dom";
 import { IoIosSearch } from "react-icons/io";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useGetUserQuery } from "../../redux/api/api";
 
 const Navbar1 = () => {
-  const { user, loading }: any = useContext(AuthContext);
-  console.log("user", user);
-  if (loading) {
-    return;
+  const { user }: any = useContext(AuthContext);
+  const { data, isLoading } = useGetUserQuery(undefined);
+  console.log("user", data);
+  if (isLoading) {
+    return <h1>Loading...</h1>;
   }
+  console.log(data.data.length);
   return (
     <div className="bg-primary">
+      {data?.data.map((user: any) => (
+        <h1 className="text-white">{user.email}</h1>
+      ))}
       <div className="max-w-6xl mx-auto text-white flex justify-between align-center py-2">
         <Link to="/">
           <img

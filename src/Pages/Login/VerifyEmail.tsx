@@ -1,51 +1,42 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { useForm } from "react-hook-form";
-import "./VerifiEmail.css";
 import { useContext, useState } from "react";
 import OTPInput from "otp-input-react";
-import logo from "../../../public/login-logo.svg";
+import logo from "../../../public/bideex_logo.svg";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../providers/AuthProvider";
+import { useVerifyUserMutation } from "../../redux/api/api";
 
 const VerifiEmail = () => {
+  const [addEmailVerifyCode, { data, isError }] = useVerifyUserMutation();
+  const [empty, setEmptyError] = useState(true);
   const { user }: any = useContext(AuthContext);
   const [OTP, setOTP] = useState("");
-  const { handleSubmit, reset } = useForm();
+  const { handleSubmit } = useForm();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard/user";
+  if (data?.status == true) {
+    navigate(from, { replace: true });
+  }
   const onSubmit = async () => {
     const verificationCode = OTP;
     const verifiCode = {
       verificationCode,
     };
-    console.log(verifiCode);
-    // create user entry in the database
-    try {
-      await fetch(
-        "https://bideex-backend-node.vercel.app/api/user/email-verify",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(verifiCode), // Send data as JSON
-        }
-      );
-      navigate(from, { replace: true });
-      reset();
-    } catch (error) {
-      console.log(error);
+    if (verificationCode == "") {
+      setEmptyError(false);
+      return;
     }
+    addEmailVerifyCode(verifiCode);
   };
-
   return (
     <section className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2">
       <div className="flex items-center">
         <div>
           <div className="flex md:justify-start	 justify-center">
-            <img className="md:w-full w-72 md:ml-0 ml-36" src={logo} alt="" />
+            <img className="md:w-40 w-24 mt-10 " src={logo} alt="" />
           </div>
           <h1 className="text-center md:text-start text-2xl md:text-2xl font-bold my-3 md:my-0 mx-4 md:mx-0 text-black">
             Enter Your OTP (One-Time Password)
@@ -70,6 +61,20 @@ const VerifiEmail = () => {
             <span className=" text-secondary"> {user?.email} </span> <br />
             Please enter it below to complete verification.
           </p>
+          {}
+          {isError == false ? (
+            empty == true ? (
+              <></>
+            ) : (
+              <p className="text-white text-center bg-secondary mb-5 rounded">
+                Please enter your OTP
+              </p>
+            )
+          ) : (
+            <p className="text-white text-center bg-secondary mb-5 rounded">
+              The code you entered is incorrect
+            </p>
+          )}
           <OTPInput
             value={OTP}
             onChange={setOTP}
@@ -78,7 +83,8 @@ const VerifiEmail = () => {
             disabled={false}
             autoFocus
             inputStyles={{
-              backgroundColor: "#00294d", // Change background color
+              backgroundColor: "#00294d",
+              outline: "none",
               fontSize: "20px",
               fontWeight: "bold",
               borderRadius: "5px",
@@ -88,7 +94,7 @@ const VerifiEmail = () => {
               width: "40px", // Increase width
               height: "40px",
             }}
-            className="inputStyles-custom "
+            className="inputStyles-custom focus-input"
           />
           ;
           <button className="w-full btn rounded py-3 px-8 text-white hover:bg-secondary bg-secondary border-0 text-sm mt-3">

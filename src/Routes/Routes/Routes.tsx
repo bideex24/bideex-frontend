@@ -15,7 +15,12 @@ import PostAnAd from "../../Pages/Dashboard/PostAnAd/PostAnAd";
 import FavouriteAds from "../../Pages/Dashboard/FavouriteAds/FavouriteAds";
 import MyAds from "../../Pages/Dashboard/MyAds/MyAds";
 import UserDashboard from "../../Pages/Dashboard/UserDashboard/UserDashboard";
-import VerifiEmail from "../../Pages/Login/VerifiEmail";
+import VerifyEmail from "../../Pages/Login/VerifyEmail";
+import EditProfileUser from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/EditProfileUser";
+import NotificationsUser from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/NotificationUser";
+import ChoosePlan from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/ChoosePlan";
+import PasswordAndSecurity from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/PasswordAndSecurity";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
@@ -35,8 +40,8 @@ const router = createBrowserRouter([
         element: <Signup></Signup>,
       },
       {
-        path: "/verifiemail",
-        element: <VerifiEmail></VerifiEmail>,
+        path: "/verifyemail",
+        element: <VerifyEmail></VerifyEmail>,
       },
       {
         path: "/target",
@@ -51,15 +56,37 @@ const router = createBrowserRouter([
 
   {
     path: "dashboard",
-    element: <Dashboard></Dashboard>,
+    element: (
+      <PrivateRoute>
+        <Dashboard></Dashboard>
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "user",
         element: <UserDashboard></UserDashboard>,
       },
       {
-        path: "edit-profile",
+        path: "profile",
         element: <EditProfile></EditProfile>,
+        children: [
+          {
+            path: "edit",
+            element: <EditProfileUser></EditProfileUser>,
+          },
+          {
+            path: "notification",
+            element: <NotificationsUser></NotificationsUser>,
+          },
+          {
+            path: "choose-plan",
+            element: <ChoosePlan></ChoosePlan>,
+          },
+          {
+            path: "password&security",
+            element: <PasswordAndSecurity></PasswordAndSecurity>,
+          },
+        ],
       },
       {
         path: "my-ads",

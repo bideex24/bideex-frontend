@@ -1,14 +1,14 @@
 import { CiFaceFrown } from "react-icons/ci";
 import { FaRegCircleCheck } from "react-icons/fa6";
-import { IoMdNotificationsOutline } from "react-icons/io";
 import { IoFlashOutline } from "react-icons/io5";
 import phone from "../../../../public/favicon.ico";
+import { IoMdNotificationsOutline } from "react-icons/io";
 const UserDashboard = () => {
   return (
-    <section className="max-w-3xl mx-auto">
+    <section className="max-w-4xl mx-auto">
       {/* top three cart section start here */}
       <section className="flex gap-6">
-        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+        <div className="w-[260px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
           <div className="w-12 h-12 rounded-full  border border-primary">
             <FaRegCircleCheck className="text-xl text-primary absolute mt-3 ml-3" />
           </div>
@@ -17,7 +17,7 @@ const UserDashboard = () => {
             <h3 className="text-sm">Total Ad Posted</h3>
           </div>
         </div>
-        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+        <div className="w-[260px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
           <div className="w-12 h-12 rounded-full  border border-purple-500">
             <IoFlashOutline className="text-xl text-purple-400 absolute mt-3 ml-3" />
           </div>
@@ -26,7 +26,7 @@ const UserDashboard = () => {
             <h3 className="textsm">Featured Ads</h3>
           </div>
         </div>
-        <div className="w-[305px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
+        <div className="w-[260px] h-40 bg-white  rounded-xl flex justify-center items-center gap-4">
           <div className="w-12 h-12 rounded-full  border border-pink-500">
             <CiFaceFrown className="text-xl text-pink-400 absolute mt-3 ml-3" />
           </div>
@@ -40,7 +40,7 @@ const UserDashboard = () => {
       {/* bottom two cart section start here */}
       <section className="flex gap-6 mt-6">
         {/* left cart start here */}
-        <div className="w-[470px] min-h-screen bg-white rounded-xl ">
+        <div className="w-[400px] h-fit bg-white rounded-xl ">
           <h3 className="text-sm font-bold py-6 px-6">My Activite Log</h3>
           <hr />
           <section className="px-6">
@@ -74,7 +74,7 @@ const UserDashboard = () => {
           </section>
         </div>
         {/* right cart start here */}
-        <div className="w-[470px] min-h-screen bg-white  rounded-xl">
+        <div className="w-[400px] h-fit bg-white  rounded-xl">
           <h3 className="text-sm font-bold py-6 px-6">Recent Ads</h3>
           <hr />
           <section className="px-6">
