@@ -50,13 +50,16 @@ const Signup = () => {
             // create user entry in the database
             // https://bideex-backend-node.vercel.app
             try {
-              await fetch("http://localhost:5000/api/user/create-user", {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify(formData), // Send data as JSON
-              });
+              await fetch(
+                "https://bideex-backend-node.vercel.app/api/user/create-user",
+                {
+                  method: "POST",
+                  headers: {
+                    "Content-Type": "application/json",
+                  },
+                  body: JSON.stringify(formData), // Send data as JSON
+                }
+              );
             } catch (error: any) {
               console.log(error);
             }
