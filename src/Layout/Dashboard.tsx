@@ -6,7 +6,7 @@ import {
   FaRegHeart,
   FaRegUser,
 } from "react-icons/fa";
-import { NavLink, Outlet, useLocation, useNavigate } from "react-router-dom";
+import { NavLink, Outlet } from "react-router-dom";
 import { AuthContext } from "../providers/AuthProvider";
 import Navbar1 from "../Pages/Shared/Navbar1";
 import { TfiDashboard } from "react-icons/tfi";
@@ -17,6 +17,7 @@ import {
 } from "react-icons/md";
 import { LiaFileInvoiceDollarSolid } from "react-icons/lia";
 import { IoFlashOutline } from "react-icons/io5";
+import { useGetUserQuery } from "../redux/api/api";
 
 const Dashboard = () => {
   const activeStyle = {
@@ -24,14 +25,16 @@ const Dashboard = () => {
     color: "red",
     // padding: "0px 0px 0px 20px",
   };
-  const { user, logOut }: any = useContext(AuthContext);
-  const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
+  const { user, logOut, loading }: any = useContext(AuthContext);
+  const { data, isLoading } = useGetUserQuery(user);
+
+  if (loading || isLoading) {
+    <h1>Loading...</h1>;
+  }
   const handleLogOut = () => {
     logOut()
       .then(() => {
-        navigate(from, { replace: true });
+        // navigate(from, { replace: true });
       })
       .catch((err: any) => {
         console.log(err);
@@ -70,12 +73,26 @@ const Dashboard = () => {
                     )}
                   </div>
                   <section>
-                    <h1 className=" text-sm font-bold text-primary">
-                      {user?.displayName}
-                    </h1>
-                    <h1 className="text-primary text-sm font-bold ">
-                      {user.userName} @username
-                    </h1>
+                    {data?.data.map((dbUser: any) => (
+                      <>
+                        {dbUser ? (
+                          <>
+                            <h1 className=" text-sm font-bold text-primary">
+                              {`${dbUser?.name.firstName} ${dbUser?.name.lastName}`}
+                            </h1>
+                            <h2 className="text-primary text-sm font-bold ">
+                              {dbUser.name.userName}
+                            </h2>
+                          </>
+                        ) : (
+                          <>
+                            <h1 className="text-primary text-sm font-bold ">
+                              @username
+                            </h1>
+                          </>
+                        )}
+                      </>
+                    ))}
                   </section>
                 </div>
                 <div className="border border-gray-200 w-72 mt-4 -ml-8"></div>

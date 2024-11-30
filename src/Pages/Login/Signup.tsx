@@ -39,10 +39,10 @@ const Signup = () => {
       email: data.email,
       password: data.password,
     };
-    console.log(formData);
     await createUser(data.email, data.password)
       .then((result: any) => {
         const loggedUser = result.user;
+        console.log(loggedUser);
         updateUserProfile(data.firstName, data.lastName, data.userName).then(
           async (result: any) => {
             const loggedUser = result;
@@ -65,7 +65,6 @@ const Signup = () => {
             }
           }
         );
-        console.log(loggedUser);
         toast.success("Successfully user signUp!", {
           position: "bottom-center",
         });
@@ -78,7 +77,6 @@ const Signup = () => {
         return setError(err.message);
       });
   };
-
   return (
     <section className="max-w-6xl mx-auto">
       <header>
@@ -115,10 +113,10 @@ const Signup = () => {
             onSubmit={handleSubmit(onSubmit)}
             className="w-full md:w-96 lg:w-96 h-full md:h-[520px]  bg-primary px-5 py-5 rounded-md"
           >
-            <legend className="text-2xl font-bold text-center text-white mb-5">
+            <legend className="text-2xl font-bold text-center text-white mb-3">
               Sign Up
             </legend>
-            <p className="text-white mt-3 mb-5 lg:text-sm">
+            <p className="text-white mt-3 mb-3 lg:text-sm">
               <span>Already have an account?</span>{" "}
               <Link className="text-secondary text-sm" to="/login">
                 Login
@@ -139,7 +137,7 @@ const Signup = () => {
                   className="w-full md:w-[165px] py-2 px-4 mb-5 rounded-md mr-3 text-sm focus:outline-none hidden md:block"
                   type="text"
                   placeholder="Last Name"
-                  {...register("lasttName")}
+                  {...register("lastName")}
                 />
               </div>
               <div>

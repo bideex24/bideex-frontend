@@ -4,13 +4,12 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { Helmet } from "react-helmet-async";
 import logo from "../../../public/bideex_logo.svg";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import toast, { Toaster } from "react-hot-toast";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
-import { useGetUserQuery } from "../../redux/api/api";
+
 const Login = () => {
-  const [email, setEmail] = useState({});
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/dashboard/user";
@@ -21,10 +20,6 @@ const Login = () => {
   } = useForm();
   const { signIn }: any = useContext(AuthContext);
   const onSubmit = (data: any) => {
-    const email = {
-      email: data.email,
-    };
-    setEmail(email);
     signIn(data.email, data.password)
       .then((result: any) => {
         const user = result.user;
@@ -38,9 +33,6 @@ const Login = () => {
         console.log(err);
       });
   };
-  const { data } = useGetUserQuery(email);
-  console.log(data);
-  console.log(email);
 
   return (
     <section className="max-w-6xl mx-auto">

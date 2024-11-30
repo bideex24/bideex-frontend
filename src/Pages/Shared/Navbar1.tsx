@@ -10,17 +10,14 @@ import { useGetUserQuery } from "../../redux/api/api";
 
 const Navbar1 = () => {
   const { user }: any = useContext(AuthContext);
-  const { data, isLoading } = useGetUserQuery(undefined);
-  console.log("user", data);
+  const { data, isLoading } = useGetUserQuery(user, {
+    pollingInterval: 5000, // Refetch every 30 seconds
+  });
   if (isLoading) {
     return <h1>Loading...</h1>;
   }
-  console.log(data.data.length);
   return (
     <div className="bg-primary">
-      {data?.data.map((user: any) => (
-        <h1 className="text-white">{user.email}</h1>
-      ))}
       <div className="max-w-6xl mx-auto text-white flex justify-between align-center py-2">
         <Link to="/">
           <img
@@ -41,32 +38,57 @@ const Navbar1 = () => {
                   </span>
                 </>
               )}
-              {user ? (
+              {data?.data.map((user: any) => (
                 <>
-                  <li className="mt-1">
-                    <Link
-                      to="/dashboard/user"
-                      className="text-white text-sm font-bold mr-4"
-                    >
-                      Dashboard
-                    </Link>
-                  </li>
-                  {user?.photoURL ? (
-                    <>
-                      <img
-                        className="w-10 rounded-full"
-                        alt="user"
-                        src={user.photoURL}
-                      />
-                    </>
+                  {user.isVerified == true ? (
+                    <ul className="flex">
+                      <li className="mt-1">
+                        <Link
+                          to="/dashboard/user"
+                          className="text-white text-sm font-bold mr-4"
+                        >
+                          Dashboard
+                        </Link>
+                      </li>
+                      {user?.photoURL ? (
+                        <>
+                          <img
+                            className="w-10 rounded-full"
+                            alt="user"
+                            src={user.photoURL}
+                          />
+                        </>
+                      ) : (
+                        <>
+                          <span className="text-3xl text-white">
+                            <FaRegUserCircle />
+                          </span>
+                        </>
+                      )}
+                    </ul>
                   ) : (
                     <>
-                      <span className="text-3xl text-white">
-                        <FaRegUserCircle />
-                      </span>
+                      <Link className="mt-2 text-sm" to="/login">
+                        Login
+                      </Link>
+                      <span className="ml-2 mt-2 mr-2">|</span>
+                      <li className="underline pt-2 text-sm">
+                        <Link to="">How It works</Link>
+                        <span className="ml-2">|</span>
+                      </li>
+                      <li className="mx-2 pt-2 text-sm">
+                        <Link to="">Help</Link>
+                      </li>
+                      <img className="w-10 h-5 mt-2 mr-2" src={flag} alt="" />
+                      <li className="mt-2 mr-2 text-sm">
+                        <Link to="">Eng</Link>
+                      </li>
                     </>
                   )}
                 </>
+              ))}
+              {user ? (
+                <></>
               ) : (
                 <>
                   <Link className="mt-2 text-sm" to="/login">
