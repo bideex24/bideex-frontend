@@ -1,21 +1,34 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import logo from "../../assets/logo.svg";
 import flag from "../../assets/images/USAFlag.png";
-import { FaRegUserCircle, FaUser } from "react-icons/fa";
+import { FaUser } from "react-icons/fa";
 import { Link } from "react-router-dom";
-import { IoIosSearch } from "react-icons/io";
+import {
+  IoIosArrowDown,
+  IoIosNotifications,
+  IoIosSearch,
+} from "react-icons/io";
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useGetUserQuery } from "../../redux/api/api";
-
+import { RiArrowDropDownLine } from "react-icons/ri";
+import userImg from "../../../public/profile-photo.jpeg";
 const Navbar1 = () => {
-  const { user }: any = useContext(AuthContext);
-  const { data, isLoading } = useGetUserQuery(user, {
-    pollingInterval: 5000, // Refetch every 30 seconds
-  });
-  if (isLoading) {
-    return <h1>Loading...</h1>;
-  }
+  const { user, logOut }: any = useContext(AuthContext);
+  const { data } = useGetUserQuery(user);
+  console.log(data);
+  const handleLogOut = () => {
+    logOut()
+      .then(() => {
+        // navigate(from, { replace: true });
+      })
+      .catch((err: any) => {
+        console.log(err);
+      });
+  };
+  const handleToggle = (e: any) => {
+    console.log(e);
+  };
   return (
     <div className="bg-primary">
       <div className="max-w-6xl mx-auto text-white flex justify-between align-center py-2">
@@ -38,33 +51,218 @@ const Navbar1 = () => {
                   </span>
                 </>
               )}
-              {data?.data.map((user: any) => (
-                <>
-                  {user.isVerified == true ? (
-                    <ul className="flex">
+              {user?.emailVerified == true ? (
+                <ul className="flex items-center gap-3">
+                  <button>
+                    <IoIosNotifications className="text-2xl text-gray-400" />
+                  </button>
+                  <div className="dropdown dropdown-end">
+                    <div className="flex">
+                      <div
+                        tabIndex={0}
+                        role="button"
+                        className="btn btn-ghost btn-circle avatar"
+                      >
+                        <div className="w-10 rounded-full">
+                          {user?.photoURL ? (
+                            <>
+                              <img
+                                className="w-10 rounded-full"
+                                alt="user"
+                                src={user.photoURL}
+                              />
+                            </>
+                          ) : (
+                            <>
+                              <span className="text-3xl text-white">
+                                <img src={userImg} alt="userprofile" />
+                              </span>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                      <button>
+                        <RiArrowDropDownLine
+                          tabIndex={0}
+                          className="text-2xl text-gray-400"
+                        />
+                      </button>
+                    </div>
+                    <ul
+                      tabIndex={0}
+                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 p-2 -mr-10 shadow"
+                    >
+                      <li className="mt-1">
+                        <Link
+                          to=""
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          Post a ad
+                        </Link>
+                      </li>
+                      <hr />
+                      <li className="mt-1">
+                        <Link
+                          to=""
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          View profile
+                        </Link>
+                      </li>
                       <li className="mt-1">
                         <Link
                           to="/dashboard/user"
-                          className="text-white text-sm font-bold mr-4"
+                          className="text-black text-sm font-bold mr-4"
                         >
                           Dashboard
                         </Link>
                       </li>
-                      {user?.photoURL ? (
-                        <>
-                          <img
-                            className="w-10 rounded-full"
-                            alt="user"
-                            src={user.photoURL}
-                          />
-                        </>
-                      ) : (
-                        <>
-                          <span className="text-3xl text-white">
-                            <FaRegUserCircle />
-                          </span>
-                        </>
-                      )}
+                      <li className="mt-1">
+                        <Link
+                          to="/dashboard/profile/password&security"
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          Settings
+                        </Link>
+                      </li>
+                      <hr />
+                      <li className="mt-1">
+                        <Link
+                          to="/dashboard/user"
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          Support
+                        </Link>
+                      </li>
+                      <li className="mt-1">
+                        <Link
+                          to="/dashboard/user"
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          Community
+                        </Link>
+                      </li>
+                      <hr />
+                      <li className="mt-1">
+                        <button
+                          onClick={handleLogOut}
+                          className="text-black text-sm font-bold mr-4"
+                        >
+                          Log Out
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </ul>
+              ) : (
+                <></>
+              )}
+              {data?.data.map((dbuser: any) => (
+                <>
+                  {dbuser?.emailVerified == true ||
+                  user.emailVerified == true ? (
+                    <ul className="flex items-center gap-3">
+                      <button>
+                        <IoIosNotifications className="text-2xl text-white" />
+                      </button>
+                      <div className="dropdown dropdown-end">
+                        <div className="flex gap-3">
+                          <div tabIndex={0} role="button" className="">
+                            <div>
+                              {data?.data.map((dbUser: any) =>
+                                dbUser.imagePath ? (
+                                  <>
+                                    <span>
+                                      <img
+                                        className="w-9 rounded-full"
+                                        src={`https://bideex-backend-node.vercel.app/uploads/${dbUser?.imagePath}`}
+                                        alt="userprofile"
+                                      />
+                                    </span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <span>
+                                      <img
+                                        className="w-9 rounded-full"
+                                        src={userImg}
+                                        alt="userprofile"
+                                      />
+                                    </span>
+                                  </>
+                                )
+                              )}
+                            </div>
+                          </div>
+                          <button onClick={handleToggle}>
+                            <IoIosArrowDown className="text-white" />
+                          </button>
+                        </div>
+                        <ul
+                          tabIndex={0}
+                          className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 p-2 -mr-10 shadow"
+                        >
+                          <li className="mt-1">
+                            <Link
+                              to=""
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Post a ad
+                            </Link>
+                          </li>
+                          <hr />
+                          <li className="mt-1">
+                            <Link
+                              to=""
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              View profile
+                            </Link>
+                          </li>
+                          <li className="mt-1">
+                            <Link
+                              to="/dashboard/user"
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Dashboard
+                            </Link>
+                          </li>
+                          <li className="mt-1">
+                            <Link
+                              to="/dashboard/profile/password&security"
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Settings
+                            </Link>
+                          </li>
+                          <hr />
+                          <li className="mt-1">
+                            <Link
+                              to="/dashboard/user"
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Support
+                            </Link>
+                          </li>
+                          <li className="mt-1">
+                            <Link
+                              to="/dashboard/user"
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Community
+                            </Link>
+                          </li>
+                          <hr />
+                          <li className="mt-1">
+                            <button
+                              onClick={handleLogOut}
+                              className="text-black text-sm font-bold mr-4"
+                            >
+                              Log Out
+                            </button>
+                          </li>
+                        </ul>
+                      </div>
                     </ul>
                   ) : (
                     <>
@@ -83,6 +281,14 @@ const Navbar1 = () => {
                       <li className="mt-2 mr-2 text-sm">
                         <Link to="">Eng</Link>
                       </li>
+                      <div>
+                        <Link
+                          to=""
+                          className="btn btn-sm text-white text-sm hover:bg-secondary bg-secondary border-0"
+                        >
+                          Post an Add
+                        </Link>
+                      </div>
                     </>
                   )}
                 </>
@@ -106,17 +312,17 @@ const Navbar1 = () => {
                   <li className="mt-2 mr-2 text-sm">
                     <Link to="">Eng</Link>
                   </li>
+                  <div>
+                    <Link
+                      to=""
+                      className="btn btn-sm text-white text-sm hover:bg-secondary bg-secondary border-0"
+                    >
+                      Post an Add
+                    </Link>
+                  </div>
                 </>
               )}
             </li>
-            <div>
-              <Link
-                to=""
-                className="btn text-white text-sm hover:bg-secondary bg-secondary border-0"
-              >
-                Post an Add
-              </Link>
-            </div>
           </ul>
         </div>
         <div className="flex gap-2 items-center md:hidden">

@@ -40,10 +40,6 @@ const router = createBrowserRouter([
         element: <Signup></Signup>,
       },
       {
-        path: "/verifyemail",
-        element: <VerifyEmail></VerifyEmail>,
-      },
-      {
         path: "/target",
         element: <SubMenuOne></SubMenuOne>,
       },
@@ -52,6 +48,14 @@ const router = createBrowserRouter([
         element: <PageNotFound></PageNotFound>,
       },
     ],
+  },
+  {
+    path: "/verifyemail",
+    element: (
+      <PrivateRoute>
+        <VerifyEmail></VerifyEmail>
+      </PrivateRoute>
+    ),
   },
 
   {

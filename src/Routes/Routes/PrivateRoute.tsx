@@ -3,9 +3,13 @@
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { Navigate } from "react-router-dom";
+import Loading from "../../Pages/Shared/Loading/Loading";
 
 const PrivateRoute = ({ children }: any) => {
-  const { user }: any = useContext(AuthContext);
+  const { user, loading }: any = useContext(AuthContext);
+  if (loading) {
+    return <Loading></Loading>;
+  }
   if (user) {
     return children;
   }

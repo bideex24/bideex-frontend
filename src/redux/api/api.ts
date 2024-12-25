@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
+// https://bideex-backend-node.vercel.app
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
@@ -11,7 +11,7 @@ export const baseApi = createApi({
       query: (email) => {
         console.log(email);
         return {
-          url: "/api/user",
+          url: `/api/user`,
           method: "GET",
           params: email,
         };
@@ -28,6 +28,18 @@ export const baseApi = createApi({
       },
       invalidatesTags: ["user"],
     }),
+    updateUser: builder.mutation({
+      query: (data) => {
+        console.log(data);
+        return {
+          url: "/api/user",
+          method: "PUT",
+          body: data,
+        };
+      },
+      invalidatesTags: ["user"], // Invalidate the cache to refresh `getUser`
+    }),
   }),
 });
-export const { useGetUserQuery, useVerifyUserMutation } = baseApi;
+export const { useGetUserQuery, useVerifyUserMutation, useUpdateUserMutation } =
+  baseApi;

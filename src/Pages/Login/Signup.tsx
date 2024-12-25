@@ -7,7 +7,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import logo from "../../../public/bideex_logo.svg";
 import { useContext, useState } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { RxCross2 } from "react-icons/rx";
 const Signup = () => {
@@ -95,9 +95,6 @@ const Signup = () => {
                 Internationally | Create Your Marketplace Account
               </title>
             </Helmet>
-            <div>
-              <Toaster />
-            </div>
             <h1 className="text-center md:text-left text-2xl md:text-3xl md:text-4xl font-bold my-3 md:my-0 mx-4 md:mx-0 text-black">
               Join Bideex Today!
             </h1>
