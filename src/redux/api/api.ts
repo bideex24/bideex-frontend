@@ -1,19 +1,31 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 // https://bideex-backend-node.vercel.app
+
 export const baseApi = createApi({
   reducerPath: "baseApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://bideex-backend-node.vercel.app",
+    baseUrl: `https://bideex-backend-node.vercel.app`,
   }),
   tagTypes: ["user"],
   endpoints: (builder) => ({
+    // this getAllUser not working use socialLogin page and backend route after fixed this problem
+    getAllUser: builder.query({
+      query: () => {
+        return {
+          url: `/api/user`,
+          method: "GET",
+        };
+      },
+      providesTags: ["user"],
+    }),
     getUser: builder.query({
       query: (email) => {
         console.log(email);
         return {
           url: `/api/user`,
           method: "GET",
-          params: email,
+          params: { email },
         };
       },
       providesTags: ["user"],
@@ -41,5 +53,9 @@ export const baseApi = createApi({
     }),
   }),
 });
-export const { useGetUserQuery, useVerifyUserMutation, useUpdateUserMutation } =
-  baseApi;
+export const {
+  useGetUserQuery,
+  useGetAllUserQuery,
+  useVerifyUserMutation,
+  useUpdateUserMutation,
+} = baseApi;

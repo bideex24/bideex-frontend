@@ -22,8 +22,9 @@ const Dashboard = () => {
     color: "red",
     // padding: "0px 0px 0px 20px",
   };
-  const { user, logOut, loading }: any = useContext(AuthContext);
-  const { data, isLoading } = useGetUserQuery(user);
+  const { logOut, loading }: any = useContext(AuthContext);
+  const email = localStorage.getItem("email");
+  const { data, isLoading } = useGetUserQuery(email);
   console.log(data);
   if (loading || isLoading) {
     <Loading></Loading>;
@@ -60,7 +61,7 @@ const Dashboard = () => {
                             <span>
                               <img
                                 className="w-9 rounded-full"
-                                src={`https://bideex-backend-node.vercel.app/uploads/${dbUser?.imagePath}`}
+                                src={`http://localhost:5000/uploads/${dbUser.imagePath}`}
                                 alt="userprofile"
                               />
                             </span>
@@ -84,11 +85,13 @@ const Dashboard = () => {
                           {dbUser ? (
                             <>
                               <h1 className=" text-sm font-bold text-primary">
-                                {`${dbUser?.name.firstName} ${dbUser?.name.lastName}`}
+                                {`${dbUser?.name?.firstName || "firstName"} ${
+                                  dbUser?.name?.lastName || "lastName"
+                                }`}
                               </h1>
 
                               <h2 className="text-primary text-sm font-bold ">
-                                @{dbUser.name.userName}
+                                @{dbUser?.name?.userName || "username"}
                               </h2>
                             </>
                           ) : (
@@ -158,7 +161,7 @@ const Dashboard = () => {
                       isActive ? activeStyle : undefined
                     }
                     className="pl-10 flex gap-3 items-center"
-                    to="/dashboard/Post-an-ad"
+                    to="/dashboard/post-an-ad/sell/step1"
                   >
                     <MdAddCircleOutline />
                     <span>Post An Ad</span>

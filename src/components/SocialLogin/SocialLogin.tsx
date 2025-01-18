@@ -2,8 +2,12 @@
 import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
+import { useGetAllUserQuery } from "../../redux/api/api";
 
 const SocialLogin = () => {
+  // const email = localStorage.getItem("email");
+  const { data } = useGetAllUserQuery(undefined);
+  console.log(data);
   const { googleSignIn }: any = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -11,9 +15,29 @@ const SocialLogin = () => {
 
   const handleGoogleSignIn = () => {
     googleSignIn()
-      .then((result: any) => {
+      .then(async (result: any) => {
         const user = result.user;
-        console.log(user);
+        localStorage.setItem("email", user.email);
+        const formData = {
+          email: user.email,
+          emailVerified: "true",
+        };
+        console.log(formData);
+        try {
+          await fetch(
+            "https://bideex-backend-node.vercel.app/api/user/create-user",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+
+              body: JSON.stringify(formData), // Send data as JSON
+            }
+          );
+        } catch (error: any) {
+          console.log(error);
+        }
         navigate(from, { replace: true });
       })
       .catch((err: any) => {

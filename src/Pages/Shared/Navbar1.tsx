@@ -11,15 +11,17 @@ import {
 import { useContext } from "react";
 import { AuthContext } from "../../providers/AuthProvider";
 import { useGetUserQuery } from "../../redux/api/api";
-import { RiArrowDropDownLine } from "react-icons/ri";
+
 import userImg from "../../../public/profile-photo.jpeg";
 const Navbar1 = () => {
   const { user, logOut }: any = useContext(AuthContext);
-  const { data } = useGetUserQuery(user);
+  const email = localStorage.getItem("email");
+  const { data } = useGetUserQuery(email);
   console.log(data);
   const handleLogOut = () => {
     logOut()
       .then(() => {
+        localStorage.removeItem("email");
         // navigate(from, { replace: true });
       })
       .catch((err: any) => {
@@ -51,112 +53,7 @@ const Navbar1 = () => {
                   </span>
                 </>
               )}
-              {user?.emailVerified == true ? (
-                <ul className="flex items-center gap-3">
-                  <button>
-                    <IoIosNotifications className="text-2xl text-gray-400" />
-                  </button>
-                  <div className="dropdown dropdown-end">
-                    <div className="flex">
-                      <div
-                        tabIndex={0}
-                        role="button"
-                        className="btn btn-ghost btn-circle avatar"
-                      >
-                        <div className="w-10 rounded-full">
-                          {user?.photoURL ? (
-                            <>
-                              <img
-                                className="w-10 rounded-full"
-                                alt="user"
-                                src={user.photoURL}
-                              />
-                            </>
-                          ) : (
-                            <>
-                              <span className="text-3xl text-white">
-                                <img src={userImg} alt="userprofile" />
-                              </span>
-                            </>
-                          )}
-                        </div>
-                      </div>
-                      <button>
-                        <RiArrowDropDownLine
-                          tabIndex={0}
-                          className="text-2xl text-gray-400"
-                        />
-                      </button>
-                    </div>
-                    <ul
-                      tabIndex={0}
-                      className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-56 p-2 -mr-10 shadow"
-                    >
-                      <li className="mt-1">
-                        <Link
-                          to=""
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Post a ad
-                        </Link>
-                      </li>
-                      <hr />
-                      <li className="mt-1">
-                        <Link
-                          to=""
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          View profile
-                        </Link>
-                      </li>
-                      <li className="mt-1">
-                        <Link
-                          to="/dashboard/user"
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Dashboard
-                        </Link>
-                      </li>
-                      <li className="mt-1">
-                        <Link
-                          to="/dashboard/profile/password&security"
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Settings
-                        </Link>
-                      </li>
-                      <hr />
-                      <li className="mt-1">
-                        <Link
-                          to="/dashboard/user"
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Support
-                        </Link>
-                      </li>
-                      <li className="mt-1">
-                        <Link
-                          to="/dashboard/user"
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Community
-                        </Link>
-                      </li>
-                      <hr />
-                      <li className="mt-1">
-                        <button
-                          onClick={handleLogOut}
-                          className="text-black text-sm font-bold mr-4"
-                        >
-                          Log Out
-                        </button>
-                      </li>
-                    </ul>
-                  </div>
-                </ul>
-              ) : (
-                <></>
-              )}
+              {user?.emailVerified == true ? <></> : <></>}
               {data?.data.map((dbuser: any) => (
                 <>
                   {dbuser?.emailVerified == true ||
@@ -175,7 +72,7 @@ const Navbar1 = () => {
                                     <span>
                                       <img
                                         className="w-9 rounded-full"
-                                        src={`https://bideex-backend-node.vercel.app/uploads/${dbUser?.imagePath}`}
+                                        src={`https://bideex-backend-node.vercel.app/uploads/${dbUser.imagePath}`}
                                         alt="userprofile"
                                       />
                                     </span>
@@ -204,7 +101,7 @@ const Navbar1 = () => {
                         >
                           <li className="mt-1">
                             <Link
-                              to=""
+                              to="/login"
                               className="text-black text-sm font-bold mr-4"
                             >
                               Post a ad
@@ -283,7 +180,7 @@ const Navbar1 = () => {
                       </li>
                       <div>
                         <Link
-                          to=""
+                          to="/"
                           className="btn btn-sm text-white text-sm hover:bg-secondary bg-secondary border-0"
                         >
                           Post an Add
@@ -314,7 +211,7 @@ const Navbar1 = () => {
                   </li>
                   <div>
                     <Link
-                      to=""
+                      to="/post-a-ad"
                       className="btn btn-sm text-white text-sm hover:bg-secondary bg-secondary border-0"
                     >
                       Post an Add

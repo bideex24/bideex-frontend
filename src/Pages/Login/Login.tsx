@@ -20,6 +20,8 @@ const Login = () => {
   } = useForm();
   const { signIn }: any = useContext(AuthContext);
   const onSubmit = (data: any) => {
+    let email = localStorage.setItem("email", data.email);
+    console.log(email);
     signIn(data.email, data.password)
       .then((result: any) => {
         const user = result.user;

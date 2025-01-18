@@ -29,6 +29,8 @@ const Signup = () => {
     let verificationCode: any = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
+    let emailSet = localStorage.setItem("email", data.email);
+    console.log(emailSet);
     const formData = {
       verificationCode: verificationCode,
       name: {
@@ -47,6 +49,7 @@ const Signup = () => {
           async (result: any) => {
             const loggedUser = result;
             console.log(loggedUser);
+            console.log(formData);
             // create user entry in the database
             // https://bideex-backend-node.vercel.app
             try {
@@ -57,6 +60,7 @@ const Signup = () => {
                   headers: {
                     "Content-Type": "application/json",
                   },
+
                   body: JSON.stringify(formData), // Send data as JSON
                 }
               );

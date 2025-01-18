@@ -21,6 +21,14 @@ import NotificationsUser from "../../Pages/Dashboard/EditProfile.tsx/EditProfile
 import ChoosePlan from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/ChoosePlan";
 import PasswordAndSecurity from "../../Pages/Dashboard/EditProfile.tsx/EditProfileUser/PasswordAndSecurity";
 import PrivateRoute from "./PrivateRoute";
+import PostAAD from "../../Pages/PostAAd/PostAAd";
+import Sell from "../../Pages/Dashboard/PostAnAd/PostCategory/Sell";
+import Service from "../../Pages/Dashboard/PostAnAd/PostCategory/Service";
+import Rent from "../../Pages/Dashboard/PostAnAd/PostCategory/Rent";
+import Job from "../../Pages/Dashboard/PostAnAd/PostCategory/Job";
+import StepOne from "../../Pages/Dashboard/PostAnAd/PostCategory/Step/StepOne";
+import StepTwo from "../../Pages/Dashboard/PostAnAd/PostCategory/Step/StepTwo";
+import StepThree from "../../Pages/Dashboard/PostAnAd/PostCategory/Step/StepThree";
 
 const router = createBrowserRouter([
   {
@@ -42,6 +50,10 @@ const router = createBrowserRouter([
       {
         path: "/target",
         element: <SubMenuOne></SubMenuOne>,
+      },
+      {
+        path: "/post-a-ad",
+        element: <PostAAD></PostAAD>,
       },
       {
         path: "*",
@@ -103,6 +115,38 @@ const router = createBrowserRouter([
       {
         path: "post-an-ad",
         element: <PostAnAd></PostAnAd>,
+        children: [
+          {
+            path: "sell",
+            element: <Sell></Sell>,
+            children: [
+              {
+                path: "step1",
+                element: <StepOne></StepOne>,
+              },
+              {
+                path: "step2",
+                element: <StepTwo></StepTwo>,
+              },
+              {
+                path: "step3",
+                element: <StepThree></StepThree>,
+              },
+            ],
+          },
+          {
+            path: "service",
+            element: <Service></Service>,
+          },
+          {
+            path: "rent",
+            element: <Rent></Rent>,
+          },
+          {
+            path: "job",
+            element: <Job></Job>,
+          },
+        ],
       },
       {
         path: "bookmarked",
