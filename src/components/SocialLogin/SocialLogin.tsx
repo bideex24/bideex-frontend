@@ -3,8 +3,10 @@ import { FcGoogle } from "react-icons/fc";
 import useAuth from "../../hooks/useAuth";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useGetAllUserQuery } from "../../redux/api/api";
+import useAxiousPublic from "../../hooks/useAxiousPublic";
 
 const SocialLogin = () => {
+  const axiosPublic = useAxiousPublic();
   // const email = localStorage.getItem("email");
   const { data } = useGetAllUserQuery(undefined);
   console.log(data);
@@ -15,29 +17,18 @@ const SocialLogin = () => {
 
   const handleGoogleSignIn = () => {
     googleSignIn()
-      .then(async (result: any) => {
+      .then((result: any) => {
         const user = result.user;
-        localStorage.setItem("email", user.email);
         const formData = {
           email: user.email,
           emailVerified: "true",
         };
         console.log(formData);
-        try {
-          await fetch(
-            "https://bideex-backend-node.vercel.app/api/user/create-user",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-              },
-
-              body: JSON.stringify(formData), // Send data as JSON
-            }
-          );
-        } catch (error: any) {
-          console.log(error);
-        }
+        axiosPublic.post("/api/user/create-user", formData).then((res) => {
+          if (res.data.insertedId) {
+            navigate(from, { replace: true });
+          }
+        });
         navigate(from, { replace: true });
       })
       .catch((err: any) => {

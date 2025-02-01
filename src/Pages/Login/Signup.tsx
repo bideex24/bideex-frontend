@@ -10,7 +10,9 @@ import { AuthContext } from "../../providers/AuthProvider";
 import toast from "react-hot-toast";
 import SocialLogin from "../../components/SocialLogin/SocialLogin";
 import { RxCross2 } from "react-icons/rx";
+import useAxiousPublic from "../../hooks/useAxiousPublic";
 const Signup = () => {
+  const axiosPublic = useAxiousPublic();
   const [error, setError] = useState<string | null>(null); // Track error for modal
   const [isModalOpen, setIsModalOpen] = useState(false);
   console.log(error);
@@ -29,51 +31,39 @@ const Signup = () => {
     let verificationCode: any = Math.floor(
       100000 + Math.random() * 900000
     ).toString();
-    let emailSet = localStorage.setItem("email", data.email);
-    console.log(emailSet);
-    const formData = {
-      verificationCode: verificationCode,
-      name: {
-        firstName: data.firstName,
-        lastName: data.lastName,
-        userName: data.userName,
-      },
-      email: data.email,
-      password: data.password,
-    };
+    // const id = `${data.firstName}2025`;
+    // console.log(id);
+    // localStorage.setItem("userId", id);
     await createUser(data.email, data.password)
       .then((result: any) => {
         const loggedUser = result.user;
         console.log(loggedUser);
         updateUserProfile(data.firstName, data.lastName, data.userName).then(
-          async (result: any) => {
-            const loggedUser = result;
-            console.log(loggedUser);
-            console.log(formData);
-            // create user entry in the database
-            // https://bideex-backend-node.vercel.app
-            try {
-              await fetch(
-                "https://bideex-backend-node.vercel.app/api/user/create-user",
-                {
-                  method: "POST",
-                  headers: {
-                    "Content-Type": "application/json",
-                  },
+          () => {
+            const formData = {
+              verificationCode: verificationCode,
 
-                  body: JSON.stringify(formData), // Send data as JSON
-                }
-              );
-            } catch (error: any) {
-              console.log(error);
-            }
+              name: {
+                firstName: data.firstName,
+                lastName: data.lastName,
+                userName: data.userName,
+              },
+              email: data.email,
+              password: data.password,
+            };
+            axiosPublic.post("/api/user/create-user", formData).then((res) => {
+              if (res.data.insertedId) {
+                console.log("user added to the database");
+                toast.success("Successfully user signUp!", {
+                  position: "bottom-center",
+                });
+
+                reset();
+              }
+            });
+            navigate(from, { replace: true });
           }
         );
-        toast.success("Successfully user signUp!", {
-          position: "bottom-center",
-        });
-        navigate(from, { replace: true });
-        reset();
       })
       .catch((err: any) => {
         setError(err.message);

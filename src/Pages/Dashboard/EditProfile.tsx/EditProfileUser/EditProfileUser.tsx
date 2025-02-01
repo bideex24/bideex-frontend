@@ -3,16 +3,18 @@
 // import { AuthContext } from "../../../../providers/AuthProvider";
 import SingleUser from "./SingleUser/SingleUser";
 import { useGetUserQuery } from "../../../../redux/api/api";
+import { useContext } from "react";
+import { AuthContext } from "../../../../providers/AuthProvider";
 
 const EditProfileUser = () => {
-  // const { user }: any = useContext(AuthContext);
-  const email = localStorage.getItem("email");
-  const { data }: any = useGetUserQuery(email);
+  const { user }: any = useContext(AuthContext);
+
+  const { data }: any = useGetUserQuery(user?.email);
   console.log(data);
   return (
     <div>
-      {data?.data?.map((dbUser: any) => (
-        <SingleUser dbUser={dbUser}></SingleUser>
+      {data?.data?.map((dbUser: any, index: number) => (
+        <SingleUser dbUser={dbUser} key={index}></SingleUser>
       ))}
       {}
     </div>

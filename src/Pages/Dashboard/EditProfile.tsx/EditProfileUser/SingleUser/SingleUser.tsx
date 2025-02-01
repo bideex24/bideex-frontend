@@ -15,6 +15,7 @@ const SingleUser = ({ dbUser }: any) => {
   const [addUser] = useUpdateUserMutation(user);
   const [userProfile, setUserProfile] = useState("");
   const [image, setImage] = useState("");
+  console.log(userProfile);
   const [firstName, setFirstName] = useState(dbUser?.name?.firstName || "");
   const [lastName, setLastName] = useState(dbUser?.name?.lastName || "");
   const [userName, setUserName] = useState(dbUser?.name?.userName || "");

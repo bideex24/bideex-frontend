@@ -7,13 +7,7 @@ const StepTwo = () => {
   const data = JSON.parse(localStorage.getItem("stepTwoData") || "{}");
   console.log(data);
   const [price, setPrice] = useState(data.sellPrice || "");
-  const [newProduct, setNewProduct] = useState(
-    data?.sellCondition?.condition || ""
-  );
-  console.log(newProduct);
-  const [usedProduct, setUsedProduct] = useState(
-    data?.sellCondition?.condition || ""
-  );
+  const [condition, setCondition] = useState(data?.sellCondition || "");
   const [name, setName] = useState(data.sellerName || "");
   const [email, setEmail] = useState(data.sellerEmail || "");
   const [city, setCity] = useState(data.sellerCity || "");
@@ -22,11 +16,9 @@ const StepTwo = () => {
   const handlePrice = (event: any) => {
     setPrice(event.target.value);
   };
-  const handleConditionNew = (event: any) => {
-    setNewProduct(event.target.value);
-  };
-  const handleConditionUsed = (event: any) => {
-    setUsedProduct(event.target.value);
+
+  const handleCondition = (event: any) => {
+    setCondition(event.target.value);
   };
 
   const handleName = (event: any) => {
@@ -49,8 +41,7 @@ const StepTwo = () => {
   const onSubmit = () => {
     const stepTwo = {
       sellPrice: price,
-      sellConditionUsed: usedProduct,
-      sellConditionNew: newProduct,
+      sellCondition: condition,
       sellerName: name,
       sellerEmail: email,
       sellerCity: city,
@@ -86,16 +77,18 @@ const StepTwo = () => {
           <input
             type="radio"
             id="new"
-            value="newProduct"
-            onChange={handleConditionNew}
+            value="new"
+            checked={condition === "new"}
+            onChange={handleCondition}
           />
 
           <label htmlFor="used">Used</label>
           <input
             type="radio"
             id="use"
-            value="usedProduct"
-            onChange={handleConditionUsed}
+            value="used"
+            checked={condition === "used"}
+            onChange={handleCondition}
           />
         </div>
         <div className="my-5">

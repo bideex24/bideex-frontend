@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import ReactQuill from "react-quill";
 import CustomToolBar from "./CustomToolBar";
 import "./CustomToolBar";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const categories = [
   {
     label: "Electronics",
@@ -48,7 +48,7 @@ const categories = [
 ];
 const StepOne = () => {
   const data = JSON.parse(localStorage.getItem("stepOneData") || "{}");
-  const [nextStep] = useState(data.selectedCategory || "");
+  const [nextStep] = useState(data.sellselectedCategory || "");
   console.log(nextStep);
   const [description, setValueDescription] = useState(
     data?.sellDescription || ""
@@ -69,7 +69,6 @@ const StepOne = () => {
   };
 
   console.log(title);
-  console.log(description);
 
   const {
     handleSubmit,
@@ -108,7 +107,15 @@ const StepOne = () => {
     currentSubCategories.find((subCat) => subCat.label === selectedSubCategory)
       ?.subCategories || [];
   console.log(errors);
-  console.log(description);
+  console.log(nextStep);
+  const navigate = useNavigate();
+
+  const handleClick = (event: any) => {
+    event.preventDefault(); // Prevent the default button action
+    setTimeout(() => {
+      navigate("/dashboard/post-an-ad/sell/step2");
+    }, 1000); // 2-second delay before navigation
+  };
   return (
     <div className="max-w-3xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -167,7 +174,8 @@ const StepOne = () => {
         <div>
           {/* Main Category Dropdown */}
           <label>
-            Select Category:
+            Select Category:{" "}
+            <sup className="text-red-400 text-lg font-bold">*</sup>
             <select
               value={selectedCategory}
               onChange={handleCategoryChange}
@@ -236,15 +244,13 @@ const StepOne = () => {
         {/* Submit Button */}
         {nextStep != "" ? (
           <div>
-            <Link to="/dashboard/post-an-ad/sell/step2">
-              {" "}
-              <button
-                type="submit"
-                className="w-3/12 bg-secondary text-white py-2 mt-5 px-4 rounded-md hover:bg-secondary"
-              >
-                Next
-              </button>
-            </Link>
+            <button
+              type="submit"
+              onClick={handleClick}
+              className="w-3/12 bg-secondary text-white py-2 mt-5 px-4 rounded-md hover:bg-secondary"
+            >
+              Next
+            </button>
           </div>
         ) : (
           <button

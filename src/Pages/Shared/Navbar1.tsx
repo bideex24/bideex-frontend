@@ -15,13 +15,12 @@ import { useGetUserQuery } from "../../redux/api/api";
 import userImg from "../../../public/profile-photo.jpeg";
 const Navbar1 = () => {
   const { user, logOut }: any = useContext(AuthContext);
-  const email = localStorage.getItem("email");
-  const { data } = useGetUserQuery(email);
+  const { data } = useGetUserQuery(user?.email);
   console.log(data);
   const handleLogOut = () => {
     logOut()
       .then(() => {
-        localStorage.removeItem("email");
+        localStorage.removeItem("userId");
         // navigate(from, { replace: true });
       })
       .catch((err: any) => {
@@ -53,30 +52,34 @@ const Navbar1 = () => {
                   </span>
                 </>
               )}
-              {user?.emailVerified == true ? <></> : <></>}
-              {data?.data.map((dbuser: any) => (
-                <>
+
+              {data?.data.map((dbuser: any, index: number) => (
+                <div>
                   {dbuser?.emailVerified == true ||
                   user.emailVerified == true ? (
-                    <ul className="flex items-center gap-3">
+                    <ul
+                      key={dbuser.id || index}
+                      className="flex items-center gap-3"
+                    >
                       <button>
                         <IoIosNotifications className="text-2xl text-white" />
                       </button>
                       <div className="dropdown dropdown-end">
                         <div className="flex gap-3">
                           <div tabIndex={0} role="button" className="">
-                            <div>
-                              {data?.data.map((dbUser: any) =>
+                            <div key={dbuser._id || index}>
+                              {data?.data.map((dbUser: any, index: number) =>
                                 dbUser.imagePath ? (
-                                  <>
+                                  <div key={dbUser.id || index}>
                                     <span>
                                       <img
+                                        key={dbUser.id || index}
                                         className="w-9 rounded-full"
-                                        src={`https://bideex-backend-node.vercel.app/uploads/${dbUser.imagePath}`}
+                                        src={`http://localhost:5000/uploads/${dbUser.imagePath}`}
                                         alt="userprofile"
                                       />
                                     </span>
-                                  </>
+                                  </div>
                                 ) : (
                                   <>
                                     <span>
@@ -162,7 +165,7 @@ const Navbar1 = () => {
                       </div>
                     </ul>
                   ) : (
-                    <>
+                    <div>
                       <Link className="mt-2 text-sm" to="/login">
                         Login
                       </Link>
@@ -186,9 +189,9 @@ const Navbar1 = () => {
                           Post an Add
                         </Link>
                       </div>
-                    </>
+                    </div>
                   )}
-                </>
+                </div>
               ))}
               {user ? (
                 <></>

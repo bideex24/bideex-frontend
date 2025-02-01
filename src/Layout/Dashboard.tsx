@@ -22,9 +22,8 @@ const Dashboard = () => {
     color: "red",
     // padding: "0px 0px 0px 20px",
   };
-  const { logOut, loading }: any = useContext(AuthContext);
-  const email = localStorage.getItem("email");
-  const { data, isLoading } = useGetUserQuery(email);
+  const { user, logOut, loading }: any = useContext(AuthContext);
+  const { data, isLoading } = useGetUserQuery(user?.email);
   console.log(data);
   if (loading || isLoading) {
     <Loading></Loading>;
@@ -54,10 +53,10 @@ const Dashboard = () => {
               <ul className="text-black  mt-6 text-sm">
                 <div className="mb-4 w-56 mx-auto">
                   <div className="flex gap-4 items-center">
-                    <div className="">
+                    <div>
                       {data?.data.map((dbUser: any) =>
                         dbUser.imagePath ? (
-                          <>
+                          <div key={dbUser._id}>
                             <span>
                               <img
                                 className="w-9 rounded-full"
@@ -65,7 +64,7 @@ const Dashboard = () => {
                                 alt="userprofile"
                               />
                             </span>
-                          </>
+                          </div>
                         ) : (
                           <>
                             <span>

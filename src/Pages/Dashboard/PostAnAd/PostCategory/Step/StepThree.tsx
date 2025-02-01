@@ -50,7 +50,29 @@ const StepThree = () => {
     e.preventDefault();
   };
   const { handleSubmit } = useForm();
-  const onSubmit = () => {};
+  const onSubmit = () => {
+    const stepOne = JSON.parse(localStorage.getItem("stepOneData") || "{}");
+    const stepTwo = JSON.parse(localStorage.getItem("stepOneData") || "{}");
+    const formData = new FormData();
+    formData.append("sellTitle", stepOne.sellTitle);
+    formData.append("sellDescription", stepOne.sellDescription);
+    formData.append("sellselectedCategory", stepOne.sellselectedCategory);
+    formData.append("sellselectedSubCategory", stepOne.sellselectedSubCategory);
+    formData.append(
+      "sellselectedSubSubCategory",
+      stepOne.sellselectedSubSubCategory
+    );
+    formData.append("sellPrice", stepTwo.sellPrice);
+    formData.append("sellCondition", stepTwo.sellCondition);
+    formData.append("sellerArea", stepTwo.sellerArea);
+    formData.append("sellerCity", stepTwo.sellerCity);
+    formData.append("sellerEmail", stepTwo.sellerEmail);
+    formData.append("sellerName", stepTwo.sellerName);
+    formData.append("sellerZipcode", stepTwo.sellerZipcode);
+    formData.append("keyword", keywords[0]);
+    formData.append("photo", images[0]);
+    console.log(formData);
+  };
   return (
     <div className="max-w-3xl mx-auto">
       <form onSubmit={handleSubmit(onSubmit)}>
